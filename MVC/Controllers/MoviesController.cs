@@ -5,135 +5,133 @@ using BLL.DAL;
 using BLL.Services;
 using BLL.Models;
 using BLL.Services.Bases;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
-    public class RolesController : Controller
+    public class MoviesController : Controller
     {
         // Service injections:
-        private readonly IService<role, RoleModel> _roleService;
+        private readonly IService<movie, MovieModel> _movieService;
+        private readonly IService<director, DirectorModel> _directorService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
         //private readonly IManyToManyRecordService _ManyToManyRecordService;
 
-        public RolesController(
-			IService<role, RoleModel> roleService
+        public MoviesController(
+			IService<movie, MovieModel> movieService
+            , IService<director, DirectorModel> directorService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //, IManyToManyRecordService ManyToManyRecordService
         )
         {
-            _roleService = roleService;
+            _movieService = movieService;
+            _directorService = directorService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             //_ManyToManyRecordService = ManyToManyRecordService;
         }
 
-        // GET: Roles
+        // GET: Movies
         public IActionResult Index()
         {
             // Get collection service logic:
-            var list = _roleService.Query().ToList();
+            var list = _movieService.Query().ToList();
             return View(list);
         }
 
-        // GET: Roles/Details/5
+        // GET: Movies/Details/5
         public IActionResult Details(int id)
         {
             // Get item service logic:
-            var item = _roleService.Query().SingleOrDefault(q => q.Record.id == id);
+            var item = _movieService.Query().SingleOrDefault(q => q.Record.id == id);
             return View(item);
         }
 
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
+            ViewData["directorid"] = new SelectList(_directorService.Query().ToList(), "Record.id", "name");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
+            ViewBag.directorid = new MultiSelectList(_directorService.Query().ToList(), "Record.id", "name");
         }
 
-        // GET: Roles/Create
+        // GET: Movies/Create
         public IActionResult Create()
         {
             SetViewData();
             return View();
         }
 
-        // POST: Roles/Create
+        // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(RoleModel role)
+        public IActionResult Create(MovieModel movie)
         {
             if (ModelState.IsValid)
             {
                 // Insert item service logic:
-                var result = _roleService.Create(role.Record);
+                var result = _movieService.Create(movie.Record);
                 if (result.IsSuccessful)
                 {
                     TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = role.Record.id });
+                    return RedirectToAction(nameof(Details), new { id = movie.Record.id });
                 }
                 ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(role);
+            return View(movie);
         }
 
-        // GET: Roles/Edit/5
+        // GET: Movies/Edit/5
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
-            var item = _roleService.Query().SingleOrDefault(q => q.Record.id == id);
+            var item = _movieService.Query().SingleOrDefault(q => q.Record.id == id);
             SetViewData();
             return View(item);
         }
 
-        // POST: Roles/Edit
+        // POST: Movies/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(RoleModel role)
+        public IActionResult Edit(MovieModel movie)
         {
             if (ModelState.IsValid)
             {
                 // Update item service logic:
-                var result = _roleService.Update(role.Record);
+                var result = _movieService.Update(movie.Record);
                 if (result.IsSuccessful)
                 {
                     TempData["Message"] = result.Message;
-                    return RedirectToAction(nameof(Details), new { id = role.Record.id });
+                    return RedirectToAction(nameof(Details), new { id = movie.Record.id });
                 }
                 ModelState.AddModelError("", result.Message);
             }
             SetViewData();
-            return View(role);
+            return View(movie);
         }
 
-        // GET: Roles/Delete/5
+        // GET: Movies/Delete/5
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
-            var item = _roleService.Query().SingleOrDefault(q => q.Record.id == id);
+            var item = _movieService.Query().SingleOrDefault(q => q.Record.id == id);
             return View(item);
         }
 
-        // POST: Roles/Delete
+        // POST: Movies/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
-            var result = _roleService.Delete(id);
+            var result = _movieService.Delete(id);
             TempData["Message"] = result.Message;
             return RedirectToAction(nameof(Index));
         }
-
-        protected string GetTemplateName(CommandLineGeneratorModel controllerGeneratorModel)
-        {
-            throw new NotImplementedException();
-        }
-    }
+	}
 }

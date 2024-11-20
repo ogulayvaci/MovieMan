@@ -28,7 +28,7 @@ public class DirectorService: Service, IService<director, DirectorModel>
     
     public Service Create(director entity)
     {
-        if(_db.director.Any(d => d.isretired == entity.isretired && d.name.ToLower() == entity.name.ToLower().Trim()))
+        if(_db.director.Any(d => d.name.ToLower() == entity.name.ToLower().Trim() && d.surname.ToLower().Trim() == entity.surname.ToLower().Trim()))
             return Error("This Director already exists.");
         _db.director.Add(entity);
         _db.SaveChanges();
@@ -37,12 +37,13 @@ public class DirectorService: Service, IService<director, DirectorModel>
 
     public Service Update(director entity)
     {
-        if(_db.director.Any(d => d.id == entity.id && d.isretired == entity.isretired && d.name.ToLower() == entity.name.ToLower().Trim()))
+        if(_db.director.Any(d => d.id != entity.id && d.name.ToLower() == entity.name.ToLower().Trim()))
             return Error("This Director already exists.");
-        var rec = _db.director.Find(entity.id);
-        if(rec == null)
+        var rec = _db.director.SingleOrDefault(d=>d.id == entity.id );
+        if(rec is null)
             return Error("Director not found.");
         rec.name = entity.name.Trim();
+        rec.surname = entity.surname.Trim();
         rec.isretired = entity.isretired;
         _db.director.Update(rec);
         _db.SaveChanges();
@@ -51,9 +52,11 @@ public class DirectorService: Service, IService<director, DirectorModel>
 
     public Service Delete(int id)
     {
-        var rec = _db.director.Include(d=> d.movie).SingleOrDefault(d=> d.id == id);
+        var rec = _db.director.SingleOrDefault(d=> d.id == id);
         if(rec == null)
             return Error("Director not found.");
+        if(rec.movie.Any())
+            return Error("Director has movie records.");
         _db.director.Remove(rec);
         _db.SaveChanges();
         return Success("Director deleted.");

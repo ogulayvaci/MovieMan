@@ -17,6 +17,8 @@ builder.Services.AddDbContext<Db>(options =>
 
 
 builder.Services.AddScoped<IService<director,DirectorModel>, DirectorService>();
+builder.Services.AddScoped<IService<role,RoleModel>, RoleService>();
+builder.Services.AddScoped<IService<movie,MovieModel>, MovieService>();
 
 var app = builder.Build();
 
