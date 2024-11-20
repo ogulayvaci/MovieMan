@@ -1,0 +1,61 @@
+using BLL.DAL;
+using BLL.Models;
+using BLL.Services.Bases;
+using Microsoft.EntityFrameworkCore;
+
+namespace BLL.Services;
+
+public class DirectorService: Service, IService<director, DirectorModel>
+{
+    public DirectorService(Db db) : base(db)
+    {
+    }
+
+    public IQueryable<DirectorModel> Query()
+    {
+        return _db.director.OrderByDescending(d => d.isretired).ThenBy(d => d.name).ThenBy(d => d.surname)
+            .Include(d => d.movie).Select(d => new DirectorModel() {Record = d});
+    }
+
+    // public Service Create(DirectorModel model)
+    // {
+    //     if(_db.director.Any(d => d.isretired == model.Record.isretired && d.name.ToLower() == model.Record.name.ToLower().Trim()))
+    //         return Error("This Director already exists.");
+    //     _db.director.Add(model.Record);
+    //     _db.SaveChanges();
+    //     return Success("Director added by " + model.Developer);
+    // }
+    
+    public Service Create(director entity)
+    {
+        if(_db.director.Any(d => d.isretired == entity.isretired && d.name.ToLower() == entity.name.ToLower().Trim()))
+            return Error("This Director already exists.");
+        _db.director.Add(entity);
+        _db.SaveChanges();
+        return Success("Director added.");
+    }
+
+    public Service Update(director entity)
+    {
+        if(_db.director.Any(d => d.id == entity.id && d.isretired == entity.isretired && d.name.ToLower() == entity.name.ToLower().Trim()))
+            return Error("This Director already exists.");
+        var rec = _db.director.Find(entity.id);
+        if(rec == null)
+            return Error("Director not found.");
+        rec.name = entity.name.Trim();
+        rec.isretired = entity.isretired;
+        _db.director.Update(rec);
+        _db.SaveChanges();
+        return Success("Director updated.");
+    }
+
+    public Service Delete(int id)
+    {
+        var rec = _db.director.Include(d=> d.movie).SingleOrDefault(d=> d.id == id);
+        if(rec == null)
+            return Error("Director not found.");
+        _db.director.Remove(rec);
+        _db.SaveChanges();
+        return Success("Director deleted.");
+    }
+}
