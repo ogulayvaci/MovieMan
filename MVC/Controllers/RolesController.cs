@@ -6,12 +6,13 @@ using BLL.Services;
 using BLL.Models;
 using BLL.Services.Bases;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
+using MvcController = BLL.Controllers.Bases.MvcController;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
-    public class RolesController : Controller
+    public class RolesController : MvcController
     {
         // Service injections:
         private readonly IService<role, RoleModel> _roleService;

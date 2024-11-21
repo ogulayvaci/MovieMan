@@ -52,7 +52,7 @@ public class DirectorService: Service, IService<director, DirectorModel>
 
     public Service Delete(int id)
     {
-        var rec = _db.director.SingleOrDefault(d=> d.id == id);
+        var rec = _db.director.Include(d=>d.movie).SingleOrDefault(d=> d.id == id);
         if(rec == null)
             return Error("Director not found.");
         if(rec.movie.Any())

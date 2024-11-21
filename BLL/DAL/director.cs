@@ -12,9 +12,11 @@ public partial class director
     public int id { get; set; }
 
     [StringLength(255)]
+    [Required]
     public string name { get; set; } = null!;
 
     [StringLength(255)]
+    [Required]
     public string surname { get; set; } = null!;
 
     public bool isretired { get; set; }

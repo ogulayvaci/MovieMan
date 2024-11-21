@@ -12,15 +12,17 @@ public partial class movie
     public int id { get; set; }
 
     [StringLength(255)]
+    [Required]
     public string name { get; set; } = null!;
-
+    
+    [Required]
     public DateOnly? releasedate { get; set; }
 
     [Precision(18, 2)]
     public decimal? totalrevenue { get; set; }
 
     public int? directorid { get; set; }
-
+    
     [ForeignKey("directorid")]
     [InverseProperty("movie")]
     public virtual director? director { get; set; }

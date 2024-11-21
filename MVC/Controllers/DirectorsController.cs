@@ -7,12 +7,13 @@ using BLL.Models;
 using BLL.Services.Bases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
+using MvcController = BLL.Controllers.Bases.MvcController;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
-    public class DirectorsController : Controller
+    public class DirectorsController : MvcController
     {
         // Service injections:
         private readonly IService<director, DirectorModel> _directorService;

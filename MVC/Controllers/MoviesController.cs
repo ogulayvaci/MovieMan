@@ -1,3 +1,4 @@
+using BLL.Controllers.Bases;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 // using BLL.Controllers.Bases;
@@ -10,7 +11,7 @@ using BLL.Services.Bases;
 
 namespace MVC.Controllers
 {
-    public class MoviesController : Controller
+    public class MoviesController : MvcController
     {
         // Service injections:
         private readonly IService<movie, MovieModel> _movieService;

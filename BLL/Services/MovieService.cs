@@ -16,7 +16,7 @@ public class MovieService : Service, IService<movie, MovieModel>
         return _db.movie
             .Include(m => m.director)
             .Include(m => m.moviegenre)
-            .OrderByDescending(m => m.name)
+            .OrderBy(m => m.name)
             .ThenBy(m => m.releasedate)
             .Select(m => new MovieModel { Record = m });
     }
@@ -34,7 +34,7 @@ public class MovieService : Service, IService<movie, MovieModel>
     {
         if (_db.movie.Any(m => m.id != entity.id && m.name.ToLower() == entity.name.ToLower()))
             return Error("Movie with the same name already exists");
-        var rec = _db.movie.FirstOrDefault(m => m.id == entity.id);
+        var rec = _db.movie.Find(entity.id);
         rec.name = entity.name;
         rec.releasedate = entity.releasedate;
         rec.director = entity.director;

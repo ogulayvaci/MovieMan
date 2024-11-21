@@ -63,7 +63,7 @@
                                 @Html.DisplayFor(modelItem => item.isretired)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.movies)
+                                @Html.Raw(item.movies)
                             </td>
 					        <td class="text-end w-25">
 						        <a asp-action="Details" asp-route-id="@item.Record.id">Details</a>&nbsp;|&nbsp;

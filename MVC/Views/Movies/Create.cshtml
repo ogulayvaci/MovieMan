@@ -56,13 +56,6 @@
 		        <span asp-validation-for="Record.directorid" class="text-danger"></span>
 	        </div>
         </div>
-	    <div class="row mb-3">
-		    <label asp-for="moviegenres" class="col-2 col-form-label fw-bold"></label>
-		    <div class="col-10">
-			    <input asp-for="Record.moviegenre" class="form-control" />
-			    <span asp-validation-for="Record.moviegenre" class="text-danger"></span>
-		    </div>
-	    </div>
 
 @* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
         @*
