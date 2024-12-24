@@ -11,13 +11,13 @@ public partial class director
     [Key]
     public int id { get; set; }
 
-    [StringLength(255)]
     [Required]
-    public string name { get; set; } = null!;
+    [StringLength(100)]
+    public string name { get; set; }
 
-    [StringLength(255)]
     [Required]
-    public string surname { get; set; } = null!;
+    [StringLength(100)]
+    public string surname { get; set; }
 
     public bool isretired { get; set; }
 

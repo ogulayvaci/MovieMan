@@ -1,3 +1,4 @@
+using BLL.Context;
 using BLL.DAL;
 using BLL.Models;
 using BLL.Services.Bases;
@@ -16,6 +17,7 @@ public class MovieService : Service, IService<movie, MovieModel>
         return _db.movie
             .Include(m => m.director)
             .Include(m => m.moviegenre)
+            .ThenInclude(mg=>mg.genre)
             .OrderBy(m => m.name)
             .ThenBy(m => m.releasedate)
             .Select(m => new MovieModel { Record = m });

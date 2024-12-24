@@ -11,21 +11,20 @@ public partial class movie
     [Key]
     public int id { get; set; }
 
-    [StringLength(255)]
     [Required]
-    public string name { get; set; } = null!;
-    
-    [Required]
+    [StringLength(200)]
+    public string name { get; set; }
+
     public DateOnly? releasedate { get; set; }
 
-    [Precision(18, 2)]
+    [Precision(15, 2)]
     public decimal? totalrevenue { get; set; }
 
-    public int? directorid { get; set; }
-    
+    public int directorid { get; set; }
+
     [ForeignKey("directorid")]
     [InverseProperty("movie")]
-    public virtual director? director { get; set; }
+    public virtual director director { get; set; }
 
     [InverseProperty("movie")]
     public virtual ICollection<moviegenre> moviegenre { get; set; } = new List<moviegenre>();

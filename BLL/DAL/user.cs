@@ -6,23 +6,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BLL.DAL;
 
-[Index("username", Name = "user_username_key", IsUnique = true)]
+[Index("username", Name = "User_username_key", IsUnique = true)]
 public partial class user
 {
     [Key]
     public int id { get; set; }
 
-    [StringLength(255)]
-    public string username { get; set; } = null!;
+    [Required]
+    [StringLength(100)]
+    public string username { get; set; }
 
+    [Required]
     [StringLength(255)]
-    public string password { get; set; } = null!;
+    public string password { get; set; }
 
     public bool isactive { get; set; }
 
-    public int? roleid { get; set; }
+    public int roleid { get; set; }
 
     [ForeignKey("roleid")]
     [InverseProperty("user")]
-    public virtual role? role { get; set; }
+    public virtual role role { get; set; }
 }

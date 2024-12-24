@@ -6,13 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BLL.DAL;
 
+[Index("name", Name = "genre_name_key", IsUnique = true)]
 public partial class genre
 {
     [Key]
     public int id { get; set; }
 
-    [StringLength(255)]
-    public string name { get; set; } = null!;
+    [Required]
+    [StringLength(50)]
+    public string name { get; set; }
 
     [InverseProperty("genre")]
     public virtual ICollection<moviegenre> moviegenre { get; set; } = new List<moviegenre>();

@@ -1,4 +1,5 @@
-@model BLL.Models.MovieModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model BLL.Models.GenreModel
 
 @* Generated from Custom Template. *@
 @* Model namespace using directive should be added to _ViewImports.cshtml. *@
@@ -7,7 +8,7 @@
     var containerDivClass = "container";
 }
 @{
-    ViewData["Title"] = "movie Details";
+    ViewData["Title"] = "genre Details";
 }
 
 <div class="@containerDivClass">
@@ -32,42 +33,18 @@
             @Html.DisplayFor(model => model.name)
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.releasedate)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.releasedate)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.totalrevenue)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.totalrevenue)
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col-2 fw-bold">
-            @Html.DisplayNameFor(model => model.director)
-        </div>
-        <div class="col-10">
-            @Html.DisplayFor(model => model.director)
-        </div>
-    </div>
 
 @* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
-    
+    @*
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            <b>@Html.DisplayNameFor(model => model.moviegenres)</b>
+            <b>@Html.DisplayNameFor(model => model.ManyToManyRecords)</b>
         </div>
         <div class="col-10">
-            @Html.Raw(Model.moviegenres)
+            @Html.Raw(Model.ManyToManyRecords)
         </div>
     </div>
-    
+    *@
 
     <hr /> 
     <a asp-action="Edit" asp-route-id="@Model.Record.id">Edit</a>&nbsp;|&nbsp;
