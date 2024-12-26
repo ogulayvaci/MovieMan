@@ -13,11 +13,11 @@ public partial class user
     public int id { get; set; }
 
     [Required]
-    [StringLength(100)]
+    [StringLength(20)]
     public string username { get; set; }
 
     [Required]
-    [StringLength(255)]
+    [StringLength(10)]
     public string password { get; set; }
 
     public bool isactive { get; set; }

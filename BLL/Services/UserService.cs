@@ -14,7 +14,7 @@ public class UserService: Service, IService<user, UserModel>
 
     public IQueryable<UserModel> Query()
     {
-        return _db.user.Include(u => u.role).Where(u => u.isactive).Select(u => new UserModel() { Record = u });
+        return _db.user.Include(u => u.role).OrderByDescending(u => u.isactive).ThenBy(u=>u.username).Select(u => new UserModel() {Record = u});
     }
 
     public Service Create(user entity)

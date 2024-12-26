@@ -19,13 +19,14 @@ public class MovieModel
     [DisplayName ("Movie Director")]
     public string director => Record.director?.name + " " + Record.director?.surname;
     
-    [DisplayName ("Movie Genres")]
-    public string moviegenres => string.Join("<br>", Record.moviegenre.Select(g => g.movie.moviegenre));
+    [DisplayName ("Genres")]
+    public string genres => string.Join("<br>", Record.moviegenre.Select(g => g.movie.moviegenre));
     
-    // public List<int> genreids 
-    // {
-    //     get => Record.moviegenre?.Select(mg => mg.StoreId).ToList();
-    //     set => Record.ProductStores = value.Select(v => new ProductStore() { StoreId = v }).ToList(); 
-    // }
+    [DisplayName ("Movie Genres")]
+    public List<int> genreids
+    {
+        get => Record.moviegenre?.Select(mg => mg.genreid).ToList();
+        set => Record.moviegenre = value.Select(v=> new moviegenre() {genreid = v}).ToList();
+    }
 
 }

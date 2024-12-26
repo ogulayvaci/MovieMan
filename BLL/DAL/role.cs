@@ -12,7 +12,7 @@ public partial class role
     public int id { get; set; }
 
     [Required]
-    [StringLength(50)]
+    [StringLength(5)]
     public string name { get; set; }
 
     [InverseProperty("role")]

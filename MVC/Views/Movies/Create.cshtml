@@ -67,7 +67,7 @@
 @* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
 
         <div class="row mb-3">
-            <label asp-for="moviegenres" class="col-2 col-form-label fw-bold"></label>
+            <label asp-for="genreids" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
 		        <select multiple asp-for="Record.moviegenre" class="form-select" asp-items="ViewBag.moviegenre"></select>
 		        <span asp-validation-for="Record.moviegenre" class="text-danger"></span>

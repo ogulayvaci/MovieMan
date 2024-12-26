@@ -57,10 +57,10 @@ namespace MVC.Controllers
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["directorid"] = new SelectList(_directorService.Query().ToList(), "Record.id", "name");
+            ViewData["directorid"] = new SelectList(_directorService.Query().ToList(), "Record.id", "nameAndSurname");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            ViewBag.genreid = new MultiSelectList(_directorService.Query().ToList(), "Record.id", "name");
+            ViewBag.moviegenre = new MultiSelectList(_genreService.Query().ToList(), "Record.id", "name");
         }
 
         // GET: Movies/Create

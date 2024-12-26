@@ -25,7 +25,7 @@ public class MovieService : Service, IService<movie, MovieModel>
 
     public Service Create(movie entity)
     {
-        if (_db.movie.Any(m => m.name.ToLower() == entity.name.ToLower()))
+        if (_db.movie.Any(m => m.name.Trim().ToLower() == entity.name.Trim().ToLower()))
             return Error("Movie already exists");
         _db.movie.Add(entity);
         _db.SaveChanges();
@@ -34,10 +34,13 @@ public class MovieService : Service, IService<movie, MovieModel>
 
     public Service Update(movie entity)
     {
-        if (_db.movie.Any(m => m.id != entity.id && m.name.ToLower() == entity.name.ToLower()))
+        if (_db.movie.Any(m => m.id != entity.id && m.name.Trim().ToLower() == entity.name.Trim().ToLower()))
             return Error("Movie with the same name already exists");
-        var rec = _db.movie.Find(entity.id);
-        rec.name = entity.name;
+        var rec = _db.movie.Include(m=>m.moviegenre).SingleOrDefault(m=>m.id == entity.id);
+        if (rec is null)
+            return Error("Record not found");
+        _db.moviegenre.RemoveRange(entity.moviegenre);
+        rec.name = entity.name.Trim();
         rec.releasedate = entity.releasedate;
         rec.director = entity.director;
         rec.moviegenre = entity.moviegenre;
@@ -49,12 +52,11 @@ public class MovieService : Service, IService<movie, MovieModel>
 
     public Service Delete(int id)
     {
-        var movie = _db.movie.Include(m=>m.moviegenre).FirstOrDefault(m => m.id == id);
-        if(movie is null)
+        var rec = _db.movie.Include(m=>m.moviegenre).FirstOrDefault(m => m.id == id);
+        if(rec is null)
             return Error("Movie not found");
-        if(movie.moviegenre.Any())
-            return Error("Movie has movie genre record(s).");
-        _db.movie.Remove(movie);
+        _db.moviegenre.RemoveRange(rec.moviegenre);
+        _db.movie.Remove(rec);
         _db.SaveChanges();
         return Success("Movie deleted");
     }

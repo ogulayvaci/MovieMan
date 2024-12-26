@@ -13,6 +13,8 @@ public class DirectorModel
     [DisplayName("Director Surname")]
     public string surname => Record.surname;
     
+    public string nameAndSurname => Record.name + " " + Record.surname;
+    
     [DisplayName("Director Status")]
     public string isretired => Record.isretired ? "Yes" : "No";
     
