@@ -8,7 +8,7 @@ public class UserModel
 {
     public user Record { get; set; }
     
-    [DisplayName("UserName")]
+    [DisplayName("Username")]
     public string username => Record.username;
     
     [DisplayName("Password")]

@@ -12,11 +12,11 @@ public partial class user
     [Key]
     public int id { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Username is required")]
     [StringLength(20)]
     public string username { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Password is required")]
     [StringLength(10)]
     public string password { get; set; }
 

@@ -64,14 +64,17 @@
             <b>@Html.DisplayNameFor(model => model.genreids)</b>
         </div>
         <div class="col-10">
-            @Html.Raw(Model.genreids)
+            @Html.Raw(Model.genres)
         </div>
     </div>
     
 
     <hr /> 
-    <a asp-action="Edit" asp-route-id="@Model.Record.id">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Delete" asp-route-id="@Model.Record.id">Delete</a>&nbsp;|&nbsp;
+    @if (User.IsInRole("admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Record.id">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Record.id">Delete</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>
 }

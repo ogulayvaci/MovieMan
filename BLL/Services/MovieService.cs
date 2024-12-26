@@ -39,10 +39,10 @@ public class MovieService : Service, IService<movie, MovieModel>
         var rec = _db.movie.Include(m=>m.moviegenre).SingleOrDefault(m=>m.id == entity.id);
         if (rec is null)
             return Error("Record not found");
-        _db.moviegenre.RemoveRange(entity.moviegenre);
+        _db.moviegenre.RemoveRange(rec.moviegenre);
         rec.name = entity.name.Trim();
         rec.releasedate = entity.releasedate;
-        rec.director = entity.director;
+        rec.directorid = entity.directorid;
         rec.moviegenre = entity.moviegenre;
         rec.totalrevenue = entity.totalrevenue;
         _db.movie.Update(rec);

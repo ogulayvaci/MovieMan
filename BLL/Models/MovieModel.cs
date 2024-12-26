@@ -20,7 +20,7 @@ public class MovieModel
     public string director => Record.director?.name + " " + Record.director?.surname;
     
     [DisplayName ("Genres")]
-    public string genres => string.Join("<br>", Record.moviegenre.Select(g => g.movie.moviegenre));
+    public string genres => string.Join("<br>", Record.moviegenre?.Select(g => g.genre?.name));
     
     [DisplayName ("Movie Genres")]
     public List<int> genreids
