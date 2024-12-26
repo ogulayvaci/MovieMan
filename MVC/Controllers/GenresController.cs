@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers
 {
+    //command
     [Authorize]
     public class GenresController : MvcController
     {
